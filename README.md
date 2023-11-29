@@ -1,4 +1,4 @@
-### F-tech-assesment
+## F-tech-assesment
 
 A webpage that submits a batch form
 
@@ -51,6 +51,9 @@ Cannot find proper svg file for logo, so a cilp of screenshot is used instead, m
 Issues occurred when initializing Docker on my PC, so test use of docker is missed in current condition.
 
 # Possible future action
+
+There are no error catching on batch uploading, considering future implement of input data check.
+
 Test running the project in Docker
 
 Test Docker compose
