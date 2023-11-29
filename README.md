@@ -15,13 +15,24 @@ pnpm dev
 bun dev
 ```
 suggest npm run dev
+
 The page will run on http://localhost:3000
+
+To start on Docker, run Docker and use command: 
+
+```bash
+docker build -t docker-next .
+
+docker run docker-next -p 3000:3000 -v /app/node_modules -v .:/app
+```
 
 # For PostgresSQL 
 
 In this case I'm using the remote vercel storage, so this way may not useful locally:
 
+```bash
 npx prisma studio
+```
 
 Environment variables loaded from .env
 
