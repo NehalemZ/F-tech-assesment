@@ -15,7 +15,7 @@ datasource db {
 model BatchForm {
 
   model        String
-  date         String
+  date         DateTime
   quantity     Int
   licenselv    Int
   comment      String

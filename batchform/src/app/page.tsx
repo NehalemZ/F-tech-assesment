@@ -16,6 +16,14 @@ export default function Home() {
     event.preventDefault()
     const serial = Math.floor(Math.random() * 100).toString()
     console.log({model, Date, Quantity, LicenseLv, Comment, serial})
+    console.log(JSON.stringify({
+      model: model,
+      Date: Date , //+ "T00:00:00"
+      Quantity: Quantity,
+      LicenseLv: LicenseLv,
+      Comment: Comment,
+      serialnum: serial
+    }))
 
     const response = await fetch('/api/form', {
       method: 'POST',
