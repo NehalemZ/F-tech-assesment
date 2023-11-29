@@ -12,7 +12,7 @@ export default function Home() {
   const [LicenseLv, setLicenseLv] = useState('')
   const [Comment, setComment] = useState('')
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault()
     const serial = Math.floor(Math.random() * 100).toString()
     console.log({model, Date, Quantity, LicenseLv, Comment, serial})
