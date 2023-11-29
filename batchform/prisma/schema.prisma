@@ -7,8 +7,9 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
 model BatchForm {
@@ -19,4 +20,5 @@ model BatchForm {
   licenselv    Int
   comment      String
   serialnum    String   @default(cuid()) @id
+
 }
