@@ -1,50 +1,41 @@
+"use client"; // This is a client componen
 import Image from 'next/image'
-//import React, {useState} from 'react'
-import Router from 'next/router'
+import React, {useState} from 'react'
+import {PrismaClient} from '@prisma/client';
+const prisma = new PrismaClient();
 
 export default function Home() {
-  // const [formData, setFormData] = useState({
-  //   model: "",
-  //   Date: "",
-  //   Quantity: "",
-  //   LicenseLv: "",
-  //   Comment: "",
-  // })
-  // const [serial, setSerial] = useState(0)
-  // function randomNumberInRange(min, max) {
-  //   return Math.floor(Math.random() * (max - min + 1)) + min;
-  // }
 
-  // const submitData = async (e: React.SyntheticEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     const serial = setSerial(randomNumberInRange(1000, 5));
-  //     const body = { formData , serial};
-  //     await fetch('/api/post', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(body),
-  //     });
-  //     console.log(body);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const [model, setModel] = useState('')
+  const [Date, setDate] = useState('')
+  const [Quantity, setQuantity] = useState('')
+  const [LicenseLv, setLicenseLv] = useState('')
+  const [Comment, setComment] = useState('')
 
+  const handleSubmit = async event => {
+    event.preventDefault()
+    const serial = Math.floor(Math.random() * 100).toString()
+    console.log({model, Date, Quantity, LicenseLv, Comment, serial})
 
-  // const handleInput = (e) => {
-  //   const fieldName = e.target.name;
-  //   const fieldValue = e.target.value;
-  
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [fieldName]: fieldValue
-  //   }));
-  // }
+    const response = await fetch('/api/form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: model,
+        Date: Date , //+ "T00:00:00"
+        Quantity: Quantity,
+        LicenseLv: LicenseLv,
+        Comment: Comment,
+        serialnum: serial
+      }),
+    })
 
-  function submit(data) {
-    console.log(data);
+    const data = await response.json()
+    console.log(data)
   }
+
 
 
 
@@ -76,9 +67,10 @@ export default function Home() {
 
       <div className='text-center border 2 border-othercolor rounded text-white p-10 w-1/3'>
       <h1 className='text-left mb-5 font-bold text-lg'>Batch Form</h1>
-      <form className="space-y-2 p-1"  method="POST" /*</div>action="console.log()"*/ /*onSubmit={submit}*/>
+      <form className="space-y-2 p-1"  method="POST" /*</div>action="console.log()"*/ onSubmit={handleSubmit}>
         <div className='text-black'>
-          <select className="w-full p-1" name="model" id="model" placeholder="Model">
+          <select className="w-full p-1" name="model" id="model" placeholder="Model"
+          value={model} onChange={e => setModel(e.target.value)}>
             <option value="" selected disabled>
               Model
             </option>
@@ -89,16 +81,19 @@ export default function Home() {
         </div>
 
         <div>
-          <input className='border-slate-500 rounded text-black w-full p-1' type="date" name="Date" id="Date" placeholder="yyyy/mm/dd"/>
+          <input className='border-slate-500 rounded text-black w-full p-1' type="date" name="Date" id="Date" placeholder="yyyy/mm/dd"
+          value={Date} onChange={e => setDate(e.target.value)}/>
         </div>
 
         <div className='border-slate-500'>
-          <input className='rounded text-black w-full p-1' type="number" name="Quantity" id="Quantity" placeholder="Quantity" min="1"/>
+          <input className='rounded text-black w-full p-1' type="number" name="Quantity" id="Quantity" placeholder="Quantity" min="1"
+          value={Quantity} onChange={e => setQuantity(e.target.value)}/>
         </div>
 
 
         <div className='text-black'>
-          <select className="w-full p-1" name="LicenseLv" id="LicenseLv" placeholder="License Level">
+          <select className="w-full p-1" name="LicenseLv" id="LicenseLv" placeholder="License Level"
+          value={LicenseLv} onChange={e => setLicenseLv(e.target.value)}>
             <option value="" selected disabled>
               License Level
             </option>
@@ -116,7 +111,8 @@ export default function Home() {
         </div>
 
         <div className='border-slate-500'>
-          <textarea className='rounded w-full p-1' name="Comment" placeholder="Comment (Not required)"></textarea>
+          <textarea className='rounded w-full p-1 text-black' name="Comment"  placeholder="Comment (Not required)" 
+          value={Comment} onChange={e => setComment(e.target.value)}></textarea>
         </div>
 
         <button className="rounded bg-othercolor text-white mt-5 w-full p-1" type="submit">Submit</button>
